@@ -1,0 +1,28 @@
+{
+    "manifest_version": 3,
+    "name": "Prime Time",
+    "version": "1.0.2",
+    "description": "Finds the prime factors of a highlighted number.",
+    "permissions": ["activeTab"],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "icons": {
+      "16": "Prime_Time.png",
+      "48": "Prime_Time.png",
+      "128": "Prime_Time.png"
+    },
+    "content_scripts": [
+      {
+        "matches": ["<all_urls>"],
+        "js": ["content.js"]
+      }
+    ],
+    "action": {
+      "default_popup": "popup.html",
+      "default_icon": "Prime_Time.png"
+    },
+    "sandbox": {
+        "pages": ["content.js"]
+    }
+  }
