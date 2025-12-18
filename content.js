@@ -1,34 +1,37 @@
 let currentId = 0;
 let popupId = null;
 
-document.addEventListener("mouseup", (event) => {
-  let selectedText = window.getSelection().toString().trim();
-  selectedText = selectedText.replace(/[.,\s\\]/g, "");
-  removePopup();
-  if (/^\d+$/.test(selectedText)) {
-    let num = parseInt(selectedText, 10);
-    let factors = primeFactorization(num);
-    let count = 1;
-    let pointer = factors[0];
-    let countList = [];
-    for (let i = 1; i < factors.length; i++) {
-      if (factors[i] === pointer) {
-        count++;
-        factors.splice(i, i);
-        i--;
-      } else {
-        pointer = factors[i];
-        countList.push(count);
-        count = 1;
-      }
-    }
-    countList.push(count);
-    showPopup(
-      `Prime Factors of ${selectedText}: ${popupText(factors, countList)}`,
-      event.clientX,
-      event.clientY
-    );
-  }
+document.addEventListener("keydown", (event) => {
+	if (event.key !== "F" || !event.ctrlKey) { return }
+	else {
+		let selectedText = window.getSelection().toString().trim();
+		selectedText = selectedText.replace(/[.,\s\\]/g, "");
+		removePopup();
+		if (/^\d+$/.test(selectedText)) {
+			let num = parseInt(selectedText, 10);
+			let factors = primeFactorization(num);
+			let count = 1;
+			let pointer = factors[0];
+			let countList = [];
+			for (let i = 1; i < factors.length; i++) {
+				if (factors[i] === pointer) {
+					count++;
+					factors.splice(i, i);
+					i--;
+				} else {
+					pointer = factors[i];
+					countList.push(count);
+					count = 1;
+				}
+			}
+			countList.push(count);
+			showPopup(
+				`Prime Factor of ${selectedText}: ${popupText(factors, countList)}`,
+				event.clientX,
+				event.clientY
+			);
+		};
+	};
 });
 
 // Function to get prime factors
@@ -67,14 +70,14 @@ function showPopup(text, x, y) {
   removePopup();
 
   let popup = document.createElement("div");
-  popupId = `luhgoat-${Date.now()}`;
+  popupId = `primeTime-${Date.now()}`;
   popup.id = popupId;
   popup.innerHTML = text;
 
   // Apply positioning based on cursor location
   popup.style.position = "fixed";
-  popup.style.left = `${x}px`; // Use mouse X position
-  popup.style.top = `${y}px`; // Use mouse Y position
+  popup.style.left = `20px`; // Use mouse X position
+  popup.style.top = `20px`; // Use mouse Y position
   popup.style.backgroundColor = "white";
   popup.style.color = "black";
   popup.style.padding = "10px";
