@@ -1,11 +1,13 @@
 let currentId = 0;
 let popupId = null;
+let timeoutId;
 
-document.addEventListener("keydown", (event) => {
-	if (event.key !== "F" || !event.ctrlKey) { return }
+window.addEventListener("keydown", (event) => {
+	if (event.key !== ")" || !event.ctrlKey) { return }
 	else {
 		let selectedText = window.getSelection().toString().trim();
 		selectedText = selectedText.replace(/[.,\s\\]/g, "");
+		clearTimeout(timeoutId);
 		removePopup();
 		if (/^\d+$/.test(selectedText)) {
 			let num = parseInt(selectedText, 10);
@@ -25,10 +27,11 @@ document.addEventListener("keydown", (event) => {
 				}
 			}
 			countList.push(count);
+			timeoutId = setTimeout(() => {
+				removePopup();
+			}, 3000);
 			showPopup(
-				`Prime Factor of ${selectedText}: ${popupText(factors, countList)}`,
-				event.clientX,
-				event.clientY
+				`Prime Factors of ${selectedText}: ${popupText(factors, countList)}`,
 			);
 		};
 	};
@@ -66,7 +69,7 @@ function popupText(numbers, powers) {
   return stringReturn.trim();
 }
 
-function showPopup(text, x, y) {
+function showPopup(text) {
   removePopup();
 
   let popup = document.createElement("div");
@@ -89,8 +92,8 @@ function showPopup(text, x, y) {
 }
 
 // Remove popup when selection changes
-document.addEventListener("selectionchange", function () {
-  let selectedText = window.getSelection().toString().trim();
+window.addEventListener("selectionchange", function () {
+  let selectedText = document.getSelection().toString().trim();
   if (!/^\d+$/.test(selectedText)) {
     removePopup();
   }
