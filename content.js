@@ -1,13 +1,12 @@
-import primeFactorization from "./utils/factor";
-import { showPopup, removePopup, popupText } from "./utils/popup";
+import primeFactorization from "./utils/factor.js";
+import { showPopup, removePopup, popupText } from "./utils/popup.js";
 
 let timeoutId;
 
-// Main event listener for Ctrl + )
+// Main event listener for Ctrl + F
 window.addEventListener("keydown", (event) => {
-	if (event.key !== ")" || !event.ctrlKey) { return }
+	if (event.key !== "F" || !event.ctrlKey) { return }
 	else {
-		console.log("Ctrl + ) detected");
 		let selectedText = window.getSelection().toString().trim();
 		selectedText = selectedText.replace(/[.,\s\\]/g, "");
 		clearTimeout(timeoutId);

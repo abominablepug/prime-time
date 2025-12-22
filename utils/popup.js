@@ -30,7 +30,7 @@ function removePopup() {
 }
 
 function popupText(numbers, powers) {
-	stringReturn = "";
+	let stringReturn = "";
 	for (let i = 0; i < numbers.length; i++) {
 		stringReturn += " " + String(numbers[i]);
 		if (powers[i] > 1) {

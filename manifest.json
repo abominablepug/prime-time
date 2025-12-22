@@ -31,8 +31,5 @@
     "action": {
       "default_popup": "popup.html",
       "default_icon": "Prime_Time.png"
-    },
-    "sandbox": {
-        "pages": ["content.js"]
     }
-  }
+}
