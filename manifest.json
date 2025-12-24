@@ -3,7 +3,10 @@
     "name": "Prime Time",
     "version": "1.0.2",
     "description": "Finds the prime factors of a highlighted number.",
-    "permissions": ["activeTab"],
+    "permissions": [
+		"activeTab",
+		"storage"
+	],
     "background": {
       "service_worker": "background.js"
     },

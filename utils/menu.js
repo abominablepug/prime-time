@@ -16,4 +16,34 @@ const factorInput = () => {
 	});
 }
 
-factorInput();
+const secondText = (num) => {
+	return num == 1 ? `1 second` : `${num} seconds`;
+}
+
+const timeoutRange = () => {
+	const input = document.querySelector(".timeoutRange");
+	const output = document.querySelector(".timeoutOutput");
+
+	chrome.storage.local.get(["timeoutValue"], (result) => {
+		if (result.timeoutValue) {
+			input.value = result.timeoutValue / 1000;
+			output.textContent = secondText(input.value);
+		}
+	});
+
+	output.textContent = secondText(input.value);
+
+	input.addEventListener("input", () => {
+		output.textContent = secondText(input.value);
+
+		chrome.storage.local.set({ timeoutValue: input.value * 1000 });
+	})
+}
+
+const setupInputs = () => {
+	factorInput();
+	timeoutRange();
+}
+
+setupInputs();
+

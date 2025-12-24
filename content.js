@@ -37,11 +37,23 @@ window.addEventListener("keydown", (event) => {
 	};
 });
 
-const startHideTimer = () => {
+const getTimeoutFromStorage = () => {
+	return new Promise((resolve) => {
+		chrome.storage.local.get(["timeoutValue"], (result) => {
+			const seconds = result.timeoutValue || 3000;
+			resolve(seconds);
+		});
+	});
+}
+
+const startHideTimer = async () => {
 	clearInterval(timeoutId);
+
+	const duration = await getTimeoutFromStorage();
+
 	timeoutId = setTimeout(() => {
 		removePopup();
-	}, 3000);
+	}, duration);
 }
 
 // Remove popup when selection changes
