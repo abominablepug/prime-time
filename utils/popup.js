@@ -71,6 +71,8 @@ function showPopup(text) {
 	popup.style.fontFamily = "Arial, sans-serif";
 
 	document.body.appendChild(popup);
+
+	return popup;
 }
 
 function removePopup() {
@@ -78,22 +80,6 @@ function removePopup() {
 		document.getElementById(popupId)?.remove();
 		popupId = null;
 	}
-}
-
-function popupText(numbers, powers) {
-	let stringReturn = "";
-	for (let i = 0; i < numbers.length; i++) {
-		stringReturn += " " + String(numbers[i]);
-		if (powers[i] > 1) {
-			stringReturn += `<sup>${powers[i]}</sup> `;
-		} else {
-			stringReturn += " ";
-		}
-		if (numbers[i] !== numbers[numbers.length - 1]) {
-			stringReturn += "\u00D7";
-		}
-	}
-	return stringReturn.trim();
 }
 
 const copyText = async (text) => {
@@ -131,4 +117,4 @@ const copyText = async (text) => {
 	}
 };
 
-export { showPopup, removePopup, popupText };
+export { showPopup, removePopup };

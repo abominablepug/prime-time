@@ -10,20 +10,39 @@ window.addEventListener("keydown", (event) => {
 	else {
 		let selectedText = window.getSelection().toString().trim();
 		selectedText = selectedText.replace(/[.,\s\\]/g, "");
+
 		clearTimeout(timeoutId);
 		removePopup();
+
 		if (/^\d+$/.test(selectedText)) {
 			let num = parseInt(selectedText, 10);
 			let factors = primeFactorization(num);
-			timeoutId = setTimeout(() => {
-				removePopup();
-			}, 3000);
-			showPopup(
+
+			const popupElement = showPopup(
 				`Prime Factors of ${selectedText}: ${formatText(factors)}`,
 			);
+
+			startHideTimer();
+
+			if (popupElement) {
+				popupElement.addEventListener("mouseenter", () => {
+					clearInterval(timeoutId);
+				});
+
+				popupElement.addEventListener("mouseleave", () => {
+					startHideTimer();
+				});
+			}
 		};
 	};
 });
+
+const startHideTimer = () => {
+	clearInterval(timeoutId);
+	timeoutId = setTimeout(() => {
+		removePopup();
+	}, 3000);
+}
 
 // Remove popup when selection changes
 window.addEventListener("selectionchange", function() {
