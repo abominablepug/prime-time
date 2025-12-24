@@ -1,8 +1,8 @@
 # TODO
-- [X] Open in top right to copy paste in numbers
+- [ ] Open in top right to copy paste in numbers
 - [ ] Make the keybind to factorize customizable
 - [ ] Make the timeout time customizable
-- [ ] Add copy and paste to the popup
+- [X] Add copy and paste to the popup
 - [ ] If hovering over the popup it wont dissapear
 - [ ] Optimize the factorization for all intervals
 - [ ] Set a default break time so that factoring large numbers dont crash browser
