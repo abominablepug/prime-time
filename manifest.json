@@ -8,9 +8,9 @@
       "service_worker": "background.js"
     },
     "icons": {
-      "16": "Prime_Time.png",
-      "48": "Prime_Time.png",
-      "128": "Prime_Time.png"
+      "16": "images/Prime_Time.png",
+      "48": "images/Prime_Time.png",
+      "128": "images/Prime_Time.png"
     },
     "content_scripts": [
       {
@@ -23,13 +23,14 @@
 		"resources": [
 			"content.js",
 			"utils/popup.js",
-			"utils/factor.js"
+			"utils/factor.js",
+			"images/copy.png"
 		],
 		"matches": ["<all_urls>"]
 	  }
 	],
     "action": {
       "default_popup": "popup.html",
-      "default_icon": "Prime_Time.png"
+      "default_icon": "images/Prime_Time.png"
     }
 }
