@@ -24,6 +24,8 @@
 			"content.js",
 			"utils/popup.js",
 			"utils/factor.js",
+			"utils/menu.js",
+			"utils/format.js",
 			"images/copy.png"
 		],
 		"matches": ["<all_urls>"]
