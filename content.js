@@ -46,32 +46,6 @@ window.addEventListener("keydown", async (event) => {
 	if (!isMatch || currentKeybind.key === "ESCAPE") { return }
 	else {
 		await createPopup();
-		// let selectedText = window.getSelection().toString().trim();
-		// selectedText = selectedText.replace(/[.,\s\\]/g, "");
-		//
-		// clearTimeout(timeoutId);
-		// removePopup();
-		//
-		// if (/^\d+$/.test(selectedText)) {
-		// 	let num = parseInt(selectedText, 10);
-		// 	let factors = primeFactorization(num, await getLimitFromStorage());
-		//
-		// 	const popupElement = showPopup(
-		// 		`Prime Factors of ${selectedText}: ${formatText(factors)}`,
-		// 	);
-		//
-		// 	startHideTimer();
-		//
-		// 	if (popupElement) {
-		// 		popupElement.addEventListener("mouseenter", () => {
-		// 			clearInterval(timeoutId);
-		// 		});
-		//
-		// 		popupElement.addEventListener("mouseleave", () => {
-		// 			startHideTimer();
-		// 		});
-		// 	}
-		// };
 	};
 });
 
