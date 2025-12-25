@@ -17,7 +17,7 @@ const factorInput = () => {
 }
 
 const secondText = (num) => {
-	return num == 1 ? `1 second` : `${num} seconds`;
+	return num === 1 ? `1 second` : `${num} seconds`;
 }
 
 const timeoutRange = () => {
@@ -40,9 +40,30 @@ const timeoutRange = () => {
 	})
 }
 
+const limitRange = () => {
+	const input = document.querySelector(".limitRange");
+	const output = document.querySelector(".limitOutput");
+
+	chrome.storage.local.get(["limitValue"], (result) => {
+		if (result.limitValue) {
+			input.value = result.limitValue / 1000;
+			output.textContent = secondText(input.value);
+		}
+	});
+
+	output.textContent = secondText(input.value);
+
+	input.addEventListener("input", () => {
+		output.textContent = secondText(input.value);
+
+		chrome.storage.local.set({ limitValue: input.value * 1000 });
+	})
+}
+
 const setupInputs = () => {
 	factorInput();
 	timeoutRange();
+	limitRange();
 }
 
 setupInputs();

@@ -5,7 +5,7 @@
 - [X] Add copy and paste to the popup
 - [X] If hovering over the popup it wont dissapear
 - [ ] Optimize the factorization for all intervals
-- [ ] Set a default break time so that factoring large numbers dont crash browser
-- [ ] Make that break time customizable as well
+- [X] Set a default break time so that factoring large numbers dont crash browser
+- [X] Make that break time customizable as well
 - [ ] Add support for firefox
 - [ ] Then push changes to google and addd to firefox
