@@ -16,6 +16,52 @@ const factorInput = () => {
 	});
 }
 
+const formatKeyString = (kb) => {
+	let parts = [];
+	if (kb.ctrlKey) parts.push("Ctrl");
+	if (kb.metaKey) parts.push("Cmd");
+	if (kb.altKey) parts.push("Alt");
+	if (kb.shiftKey) parts.push("Shift");
+	parts.push(kb.key);
+	return parts.join(" + ");
+}
+
+const setupKeybindInput = () => {
+	const input = document.querySelector(".keybindInput");
+	const output = document.querySelector(".keybindOutput");
+	output.style.opacity = "0";
+
+	chrome.storage.local.get(["keybind"], (result) => {
+		if (result.keybind) {
+			input.value = formatKeyString(result.keybind);
+		} else {
+			input.value = "Ctrl + Shift + F";
+		}
+	});
+
+	input.addEventListener("keydown", (e) => {
+		e.preventDefault();
+
+		if (["Control", "Shift", "Alt", "Meta"].includes(e.key)) return;
+
+		const newKeybind = {
+			key: e.key.toUpperCase(),
+			ctrlKey: e.ctrlKey,
+			shiftKey: e.shiftKey,
+			altKey: e.altKey,
+			metaKey: e.metaKey
+		};
+
+		input.value = formatKeyString(newKeybind);
+
+		chrome.storage.local.set({ keybind: newKeybind }, () => {
+			output.style.opacity = "1";
+			setTimeout(() => { output.style.opacity = "0"; }, 1000);
+		})
+	})
+
+}
+
 const secondText = (num) => {
 	return num === 1 ? `1 second` : `${num} seconds`;
 }
@@ -62,6 +108,7 @@ const limitRange = () => {
 
 const setupInputs = () => {
 	factorInput();
+	setupKeybindInput();
 	timeoutRange();
 	limitRange();
 }

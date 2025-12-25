@@ -6,7 +6,15 @@ let timeoutId;
 
 // Main event listener for Ctrl + F
 window.addEventListener("keydown", async (event) => {
-	if (event.key !== "F" || !event.ctrlKey) { return }
+
+	const isMatch =
+		event.key.toUpperCase() === currentKeybind.key &&
+		event.ctrlKey === currentKeybind.ctrlKey &&
+		event.shiftKey === currentKeybind.shiftKey &&
+		event.altKey === currentKeybind.altKey &&
+		event.metaKey === currentKeybind.metaKey;
+
+	if (!isMatch) { return }
 	else {
 		let selectedText = window.getSelection().toString().trim();
 		selectedText = selectedText.replace(/[.,\s\\]/g, "");
@@ -36,6 +44,30 @@ window.addEventListener("keydown", async (event) => {
 		};
 	};
 });
+
+let currentKeybind = {
+	key: "F",
+	ctrlKey: true,
+	shiftKey: true,
+	altKey: false,
+	metaKey: false,
+}
+
+const loadKeybind = () => {
+	chrome.storage.local.get(["keybind"], (result) => {
+		if (result.keybind) {
+			currentKeybind = result.keybind;
+		}
+	})
+}
+
+loadKeybind();
+
+chrome.storage.onChanged.addListener((changes, namespace) => {
+	if (namespace === "local" && changes.keybind) {
+		currentKeybind = changes.keybind.newValue;
+	}
+})
 
 const getTimeoutFromStorage = () => {
 	return new Promise((resolve) => {

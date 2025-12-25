@@ -1,6 +1,6 @@
 # TODO
 - [X] Open in top right to copy paste in numbers
-- [ ] Make the keybind to factorize customizable
+- [X] Make the keybind to factorize customizable
 - [X] Make the timeout time customizable
 - [X] Add copy and paste to the popup
 - [X] If hovering over the popup it wont dissapear
