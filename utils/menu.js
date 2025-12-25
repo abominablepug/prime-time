@@ -22,6 +22,7 @@ const factorInput = () => {
 }
 
 const formatKeyString = (kb) => {
+	if (kb.key === "ESCAPE") return "None";
 	let parts = [];
 	if (kb.ctrlKey) parts.push("Ctrl");
 	if (kb.metaKey) parts.push("Cmd");

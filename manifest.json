@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Prime Time",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "Finds the prime factors of a highlighted number.",
     "permissions": [
         "activeTab",

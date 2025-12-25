@@ -4,6 +4,35 @@ import formatText from "./utils/format.js";
 
 let timeoutId;
 
+const createPopup = async () => {
+	let selectedText = window.getSelection().toString().trim();
+	selectedText = selectedText.replace(/[.,\s\\]/g, "");
+
+	clearTimeout(timeoutId);
+	removePopup();
+
+	if (/^\d+$/.test(selectedText)) {
+		let num = parseInt(selectedText, 10);
+		let factors = primeFactorization(num, await getLimitFromStorage());
+
+		const popupElement = showPopup(
+			`Prime Factors of ${selectedText}: ${formatText(factors)}`,
+		);
+
+		startHideTimer();
+
+		if (popupElement) {
+			popupElement.addEventListener("mouseenter", () => {
+				clearInterval(timeoutId);
+			});
+
+			popupElement.addEventListener("mouseleave", () => {
+				startHideTimer();
+			});
+		}
+	};
+}
+
 // Main event listener for Ctrl + F
 window.addEventListener("keydown", async (event) => {
 
@@ -14,34 +43,35 @@ window.addEventListener("keydown", async (event) => {
 		event.altKey === currentKeybind.altKey &&
 		event.metaKey === currentKeybind.metaKey;
 
-	if (!isMatch) { return }
+	if (!isMatch || currentKeybind.key === "ESCAPE") { return }
 	else {
-		let selectedText = window.getSelection().toString().trim();
-		selectedText = selectedText.replace(/[.,\s\\]/g, "");
-
-		clearTimeout(timeoutId);
-		removePopup();
-
-		if (/^\d+$/.test(selectedText)) {
-			let num = parseInt(selectedText, 10);
-			let factors = primeFactorization(num, await getLimitFromStorage());
-
-			const popupElement = showPopup(
-				`Prime Factors of ${selectedText}: ${formatText(factors)}`,
-			);
-
-			startHideTimer();
-
-			if (popupElement) {
-				popupElement.addEventListener("mouseenter", () => {
-					clearInterval(timeoutId);
-				});
-
-				popupElement.addEventListener("mouseleave", () => {
-					startHideTimer();
-				});
-			}
-		};
+		await createPopup();
+		// let selectedText = window.getSelection().toString().trim();
+		// selectedText = selectedText.replace(/[.,\s\\]/g, "");
+		//
+		// clearTimeout(timeoutId);
+		// removePopup();
+		//
+		// if (/^\d+$/.test(selectedText)) {
+		// 	let num = parseInt(selectedText, 10);
+		// 	let factors = primeFactorization(num, await getLimitFromStorage());
+		//
+		// 	const popupElement = showPopup(
+		// 		`Prime Factors of ${selectedText}: ${formatText(factors)}`,
+		// 	);
+		//
+		// 	startHideTimer();
+		//
+		// 	if (popupElement) {
+		// 		popupElement.addEventListener("mouseenter", () => {
+		// 			clearInterval(timeoutId);
+		// 		});
+		//
+		// 		popupElement.addEventListener("mouseleave", () => {
+		// 			startHideTimer();
+		// 		});
+		// 	}
+		// };
 	};
 });
 
@@ -92,10 +122,10 @@ const startHideTimer = async () => {
 }
 
 // Remove popup when selection changes
-window.addEventListener("selectionchange", function() {
-	let selectedText = document.getSelection().toString().trim();
-	if (!/^\d+$/.test(selectedText)) {
-		removePopup();
+document.addEventListener("selectionchange", async () => {
+	removePopup();
+	if (currentKeybind.key === "ESCAPE") {
+		await createPopup();
 	}
 });
 
