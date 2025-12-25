@@ -54,7 +54,7 @@ let currentKeybind = {
 }
 
 const loadKeybind = () => {
-	chrome.storage.local.get(["keybind"], (result) => {
+	browser.storage.local.get(["keybind"]).then((result) => {
 		if (result.keybind) {
 			currentKeybind = result.keybind;
 		}
@@ -63,28 +63,22 @@ const loadKeybind = () => {
 
 loadKeybind();
 
-chrome.storage.onChanged.addListener((changes, namespace) => {
+browser.storage.onChanged.addListener((changes, namespace) => {
 	if (namespace === "local" && changes.keybind) {
 		currentKeybind = changes.keybind.newValue;
 	}
 })
 
-const getTimeoutFromStorage = () => {
-	return new Promise((resolve) => {
-		chrome.storage.local.get(["timeoutValue"], (result) => {
-			const seconds = result.timeoutValue || 3000;
-			resolve(seconds);
-		});
-	});
+const getTimeoutFromStorage = async () => {
+	const result = await browser.storage.local.get(["timeoutValue"]);
+	const seconds = result.timeoutValue || 3000;
+	return seconds;
 }
 
-const getLimitFromStorage = () => {
-	return new Promise((resolve) => {
-		chrome.storage.local.get(["limitValue"], (result) => {
-			const seconds = result.limitValue || 3000;
-			resolve(seconds);
-		});
-	});
+const getLimitFromStorage = async () => {
+	const result = await browser.storage.local.get(["limitValue"]);
+	const seconds = result.limitValue || 3000;
+	return seconds;
 }
 
 const startHideTimer = async () => {

@@ -31,7 +31,7 @@ const setupKeybindInput = () => {
 	const output = document.querySelector(".keybindOutput");
 	output.style.opacity = "0";
 
-	chrome.storage.local.get(["keybind"], (result) => {
+	browser.storage.local.get(["keybind"]).then((result) => {
 		if (result.keybind) {
 			input.value = formatKeyString(result.keybind);
 		} else {
@@ -54,7 +54,7 @@ const setupKeybindInput = () => {
 
 		input.value = formatKeyString(newKeybind);
 
-		chrome.storage.local.set({ keybind: newKeybind }, () => {
+		browser.storage.local.set({ keybind: newKeybind }).then(() => {
 			output.style.opacity = "1";
 			setTimeout(() => { output.style.opacity = "0"; }, 1000);
 		})
@@ -70,7 +70,7 @@ const timeoutRange = () => {
 	const input = document.querySelector(".timeoutRange");
 	const output = document.querySelector(".timeoutOutput");
 
-	chrome.storage.local.get(["timeoutValue"], (result) => {
+	browser.storage.local.get(["timeoutValue"]).then((result) => {
 		if (result.timeoutValue) {
 			input.value = result.timeoutValue / 1000;
 			output.textContent = secondText(input.value);
@@ -82,7 +82,7 @@ const timeoutRange = () => {
 	input.addEventListener("input", () => {
 		output.textContent = secondText(input.value);
 
-		chrome.storage.local.set({ timeoutValue: input.value * 1000 });
+		browser.storage.local.set({ timeoutValue: input.value * 1000 });
 	})
 }
 
@@ -90,7 +90,7 @@ const limitRange = () => {
 	const input = document.querySelector(".limitRange");
 	const output = document.querySelector(".limitOutput");
 
-	chrome.storage.local.get(["limitValue"], (result) => {
+	browser.storage.local.get(["limitValue"]).then((result) => {
 		if (result.limitValue) {
 			input.value = result.limitValue / 1000;
 			output.textContent = secondText(input.value);
@@ -102,7 +102,7 @@ const limitRange = () => {
 	input.addEventListener("input", () => {
 		output.textContent = secondText(input.value);
 
-		chrome.storage.local.set({ limitValue: input.value * 1000 });
+		browser.storage.local.set({ limitValue: input.value * 1000 });
 	})
 }
 

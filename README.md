@@ -7,5 +7,5 @@
 - [ ] Optimize the factorization for all intervals
 - [X] Set a default break time so that factoring large numbers dont crash browser
 - [X] Make that break time customizable as well
-- [ ] Add support for firefox
+- [X] Add support for firefox
 - [ ] Then push changes to google and addd to firefox
