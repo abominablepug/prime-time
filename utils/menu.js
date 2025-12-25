@@ -12,7 +12,12 @@ const factorInput = () => {
 
 		const factors = primeFactorization(inputValue)
 
-		output.textContent = formatText(factors);
+		const text = formatText(factors);
+		let cleanText;
+		cleanText = text.replace(/<sup>/gm, "^");
+		cleanText = cleanText.replace(/<\/sup>/gm, '');
+
+		output.textContent = cleanText;
 	});
 }
 

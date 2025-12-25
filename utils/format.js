@@ -1,41 +1,26 @@
-const getPowers = (factors) => {
-	let count = 1;
-	let pointer = factors[0];
-	let countList = [];
-	for (let i = 1; i < factors.length; i++) {
-		if (factors[i] === pointer) {
-			count++;
-			factors.splice(i, i);
-			i--;
+function formatText(factors) {
+	if (factors.length === 0) return "";
+	if (factors[0] === "No Prime Factors") return factors[0];
+	if (factors[0] === "Time Limit Exceeded") return factors[0];
+
+	const counts = {};
+	for (let factor of factors) {
+		counts[factor] = (counts[factor] || 0) + 1;
+	}
+
+	// 2. Format into "Base^Power" string
+	const parts = [];
+	for (let base in counts) {
+		const power = counts[base];
+		if (power === 1) {
+			parts.push(base);
 		} else {
-			pointer = factors[i];
-			countList.push(count);
-			count = 1;
+			parts.push(`${base}<sup>${power}</sup>`);
 		}
 	}
-	countList.push(count);
-	return countList;
-}
 
-const factorText = (numbers, powers) => {
-	let stringReturn = "";
-	for (let i = 0; i < numbers.length; i++) {
-		stringReturn += " " + String(numbers[i]);
-		if (powers[i] > 1) {
-			stringReturn += `<sup>${powers[i]}</sup> `;
-		} else {
-			stringReturn += " ";
-		}
-		if (numbers[i] !== numbers[numbers.length - 1]) {
-			stringReturn += "\u00D7";
-		}
-	}
-	return stringReturn.trim();
-}
-
-const formatText = (factors) => {
-	const powers = getPowers(factors);
-	return factorText(factors, powers);
+	// 3. Join with multiplication sign
+	return parts.join(" \u00D7 ");
 }
 
 export default formatText;

@@ -4,7 +4,6 @@
 - [X] Make the timeout time customizable
 - [X] Add copy and paste to the popup
 - [X] If hovering over the popup it wont dissapear
-- [ ] Optimize the factorization for all intervals
 - [X] Set a default break time so that factoring large numbers dont crash browser
 - [X] Make that break time customizable as well
 - [X] Add support for firefox

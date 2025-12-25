@@ -4,8 +4,13 @@ export default function primeFactorization(n, timeLimit) {
 	if (n === 1 || n === 0) return ["No Prime Factors"];
 
 	let factors = [];
-	let i = 2;
 
+	while (n % 2 === 0) {
+		factors.push(2);
+		n /= 2;
+	}
+
+	let i = 3;
 	let checks = 0;
 
 	while (i * i <= n) {
@@ -20,7 +25,7 @@ export default function primeFactorization(n, timeLimit) {
 			factors.push(i);
 			n /= i;
 		}
-		i++;
+		i += 2;
 	}
 	if (n > 1) factors.push(n);
 	return factors;
